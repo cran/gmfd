@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Andrea Martino" />
+
+<meta name="date" content="2017-12-18" />
+
+<title>gmfd</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">gmfd</h1>
+<h4 class="author"><em>Andrea Martino</em></h4>
+<h4 class="date"><em>2017-12-18</em></h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Package <strong>gmfd</strong> (Generalized Mahalanobis Functional Distance) is an R package which gathers statistical methods for both inference and clustering of functional data based on a generalization of Mahalanobis distance. The package supports both univariate and multivariate functional data.</p>
+</div>
+<div id="simulation-of-functional-data" class="section level1">
+<h1>Simulation of functional data</h1>
+Let us consider a process <span class="math inline">\(X(t) \in L^2(I)\)</span>, with <span class="math inline">\(I \in \mathbb{R}\)</span>, with mean function <span class="math inline">\(m(t) = \mathbb{E}[X(t)]\)</span> and covariance operator <span class="math inline">\(V\)</span>, i.e. V is a linear compact integral operator from <span class="math inline">\(L^2(I)\)</span> to <span class="math inline">\(L^2(I)\)</span> such that <span class="math inline">\((Va)(s) = \int_I v(s,t) a(t) dt \quad \forall a \in L^2(I)\)</span>, where <span class="math inline">\(v\)</span> is the covariance function defined as <span class="math inline">\(v = \mathbb{E}[(X(t) - m(t))(X(s)-m(s))]\)</span>. Then, denote with <span class="math inline">\(\{\rho_k, k \ge 1\}\)</span> and <span class="math inline">\(\{\theta_k, k \ge 1\}\)</span> respectively the sequences of eigenvalues and eigenfunctions of <span class="math inline">\(v\)</span>. The Karhunen-Loève expansion decomposes the process <span class="math inline">\(X(t)\)</span> in a sum of its mean <span class="math inline">\(m(t)\)</span> and the series of orthonormal functions <span class="math inline">\(\theta_k(t)\)</span>, each one multiplied by zero-mean uncorrelated random variables <span class="math inline">\(\sqrt{\rho_k} Z_k\)</span>, (<span class="math inline">\(\rho_k&gt;0, \mathbb{V}ar(Z_k) = 1)\)</span>. Then we can write
+<span class="math display">\[\begin{equation*}
+X(t) = m(t) + \sum_{k=1}^\infty Z_{k} \sqrt{\rho_k} \cdot \theta_k(t)
+\end{equation*}\]</span>
+<p>The function <code>gmfd_simulate( size, mean, covariance, rho, theta )</code> can simulate an univariate sample of functional data where <code>size</code> represents the number of elements to be generated while <code>mean</code> is the center of the distribution. The user can choose to use the argument <code>covariance</code> for the covariance of the data or alternatively the sequences of eigenvalues and eigenfunctions of the covariance matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>( gmfd )
+
+<span class="co"># Define the parameters</span>
+n &lt;-<span class="st"> </span><span class="dv">50</span>
+P &lt;-<span class="st"> </span><span class="dv">100</span>
+K &lt;-<span class="st"> </span><span class="dv">150</span>
+
+<span class="co"># Grid of the functional dataset</span>
+t &lt;-<span class="st"> </span><span class="kw">seq</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length.out =</span> P )
+
+<span class="co"># Define the means and the parameters to use in the simulation</span>
+m1 &lt;-<span class="st"> </span>t<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>( <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>t )
+
+rho &lt;-<span class="st"> </span><span class="kw">rep</span>( <span class="dv">0</span>, K )
+theta &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="dv">0</span>, K, P )
+<span class="cf">for</span> ( k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>K ) {
+  rho[k] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>( k <span class="op">+</span><span class="st"> </span><span class="dv">1</span> )<span class="op">^</span><span class="dv">2</span>
+  <span class="cf">if</span> ( k<span class="op">%%</span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span> )
+    theta[k, ] &lt;-<span class="st"> </span><span class="kw">sqrt</span>( <span class="dv">2</span> ) <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>( k <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>t )
+  <span class="cf">else</span> <span class="cf">if</span> ( k<span class="op">%%</span><span class="dv">2</span> <span class="op">!=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;&amp;</span><span class="st"> </span>k <span class="op">!=</span><span class="st"> </span><span class="dv">1</span> )
+    theta[k, ] &lt;-<span class="st"> </span><span class="kw">sqrt</span>( <span class="dv">2</span> ) <span class="op">*</span><span class="st"> </span><span class="kw">cos</span>( ( k <span class="op">-</span><span class="st"> </span><span class="dv">1</span> ) <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>t )
+  <span class="cf">else</span>
+    theta[k, ] &lt;-<span class="st"> </span><span class="kw">rep</span>( <span class="dv">1</span>, P )
+}
+
+<span class="co"># Simulate the functional data</span>
+X &lt;-<span class="st"> </span><span class="kw">gmfd_simulate</span>( <span class="dt">size =</span> n, <span class="dt">mean =</span> m1, <span class="dt">rho =</span> rho, <span class="dt">theta =</span> theta )</code></pre></div>
+</div>
+<div id="s3-class-fundata-for-functional-data" class="section level1">
+<h1><code>S3</code> class <code>funData</code> for functional data</h1>
+<p>For ease of manipulation and visualization, a <code>S3</code> class for both univariate and multivariate functional data has been created. A <code>funData</code> object represents a functional data and it is defined by the function <code>funData( grid, F )</code> where <code>grid</code> is the grid of evenly spaced points over which the functional data is defined and <code>F</code> is a matrix (if it is a univariate functional data) or a list (if it is a multivariate functional data). A functional data as it has been just described can be then represented by using the function <code>plot.funData</code> which takes as argument all the usual customisable graphical parameters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a functional data object</span>
+FD1 &lt;-<span class="st"> </span><span class="kw">funData</span>( t, X )
+
+<span class="co"># Plot the funData object</span>
+<span class="kw">plot</span>( FD1, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span> , <span class="dt">xlab =</span> <span class="st">&quot;grid&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;data&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+<div id="generalized-mahalanobis-distance" class="section level1">
+<h1>Generalized Mahalanobis Distance</h1>
+Let us consider a <span class="math inline">\(J\)</span>-dimensional sample of <span class="math inline">\(n\)</span> realizations <span class="math inline">\(\mathbf{X}_1(t), ...,\mathbf{X}_n(t)\)</span> of a stochastic process in <span class="math inline">\((L^2(I))^J\)</span>, with <span class="math inline">\(J\geq 1\)</span>. Let <span class="math inline">\(\bar{\mathbf{X}}_n(t) = n^{-1}(\mathbf{X}_1(t) + \ldots + \mathbf{X}_n(t))\)</span> be the empirical mean. The estimated covariance function is defined as follows:
+<span class="math display">\[\begin{equation}
+\label{hat_v}
+\hat{v}(s,t) := \frac{1}{n-1} \sum_{i=1}^n \big(\mathbf{X}_i(s) - \bar{\mathbf{X}}_n(s)\big)\big(\mathbf{X}_i(t) - \bar{\mathbf{X}}_n(t)\big)^\top,
+\end{equation}\]</span>
+from which we can compute the sequences of its eigenfunctions <span class="math inline">\(\{\hat{\boldsymbol{\varphi}}_{k}=(\hat{\varphi}_k^{(1)},..., \hat{\varphi}_k^{(J)})^\top,\, k\geq 1\}\)</span> and the associated eigenvalues <span class="math inline">\(\{\hat{\lambda}_k;\, k \geq 1\}\)</span>. Since in this case the covariance function is computed using <span class="math inline">\(n\)</span> curves, we have <span class="math inline">\(\hat{\lambda}_k = 0\)</span> for all <span class="math inline">\(k\geq n\)</span>, and hence the functions <span class="math inline">\(\{\hat{\boldsymbol{\varphi}}_k;\, k \geq n\}\)</span> can be arbitrary chosen such that <span class="math inline">\(\{\hat{\boldsymbol{\varphi}}_k;\, k \geq 1\}\)</span> is an orthonormal basis of <span class="math inline">\((L^2(I))^J\)</span>. The empirical version of the generalized Mahalanobis distance based on the covariance estimator <span class="math inline">\(\hat{v}\)</span> can be written as follows:
+<span class="math display">\[\begin{equation}\begin{aligned}
+\label{def:hat_dp}
+\hat{d}^2_p(\textbf{X}_i(t),\textbf{X}_j(t)) &amp;= \sum_{k=1}^{\text{min}\{n-1,P\}} \hat{d}^2_{M,k}(\textbf{X}_i(t), \textbf{X}_j(t)) \hat{h}_k(p) \\
+&amp; + \sum_{k=\text{min}\{n-1,P\}+1}^{P} p \Big( \langle \textbf{X}_i(t) - \textbf{X}_j(t), \hat{\boldsymbol{\varphi}}_k \rangle \Big)^2,
+\end{aligned}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(P\)</span> is the length of the independent variable grid, while <span class="math inline">\(\hat{d}^2_{M,k}(\cdot,\cdot)\)</span> and <span class="math inline">\(\hat{h}(p)\)</span> represent the estimates of the square of the contribution to this distance along the <span class="math inline">\(k\)</span>-th component and the regularizing function, respectively. The function <code>funDist( FD1, FD2, metric, p, lambda, phi )</code> computes the distance between two functional data <code>FD1</code> and <code>FD2</code> by using the chosen <code>metric</code>. The last three parameters are used only for the generalized Mahalanobis distance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We estimate the eigenvalues and eigenfunctions of the covariance matrix of data</span>
+lambda &lt;-<span class="st"> </span><span class="kw">eigen</span>( <span class="kw">cov</span>( FD1<span class="op">$</span>data[[<span class="dv">1</span>]] ) )<span class="op">$</span>values
+phi &lt;-<span class="st"> </span><span class="kw">eigen</span>( <span class="kw">cov</span>( FD1<span class="op">$</span>data[[<span class="dv">1</span>]] ) )<span class="op">$</span>vectors
+
+<span class="co"># Extract two curves from the samples to compute the distance between them</span>
+x &lt;-<span class="st"> </span><span class="kw">funData</span>( t, FD1<span class="op">$</span>data[[<span class="dv">1</span>]][<span class="dv">1</span>, ] )
+y &lt;-<span class="st"> </span><span class="kw">funData</span>( t, FD1<span class="op">$</span>data[[<span class="dv">1</span>]][<span class="dv">2</span>, ] )
+
+distance &lt;-<span class="st"> </span><span class="kw">funDist</span>( x, y, <span class="dt">metric =</span> <span class="st">&quot;mahalanobis&quot;</span>, <span class="dt">p =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">5</span>, lambda, phi )
+distance</code></pre></div>
+<pre><code>## [1] 0.3482316</code></pre>
+<p>It is also possible to compute the dissimilarity matrix of a given sample by using the function <code>gmfd_diss( FD, metric, p )</code>.</p>
+</div>
+<div id="inference-on-the-means-of-functional-data-two-sample-hypotesis-tests" class="section level1">
+<h1>Inference on the means of functional data: two sample hypotesis tests</h1>
+We want now to compare the means of two functional data samples. We simulate two samples <span class="math inline">\(\mathbf{X}_1(t), ...,\mathbf{X}_{n_1}(t)\)</span> and <span class="math inline">\(\mathbf{Y}_{n_2}(t), ...,\mathbf{Y}_{n_2}(t)\)</span> and consider the following asymptotic hypotesis test:
+<span class="math display">\[\begin{equation}
+H_0 : m_{1} = m_{2} \qquad \text{vs} \qquad H_1: m_{1} \neq m_{2}.
+\end{equation}\]</span>
+<p>where <span class="math inline">\(m_1\)</span> and <span class="math inline">\(m_2\)</span> are the real means of the two simulated samples. We can infer on the means of the two samples by using the function <code>gmfd_test(FD1, FD2, conf.level, stat_test, p)</code> where we have the two samples <code>FD1</code> and <code>FD2</code>, the confidence level for the test <code>conf.level</code>, a string to choose the test statistic to use <code>stat_test</code> and the parameter of the regularizing function <code>p</code>. The function then returns the value of the test statistics, the value of the quantile and the p-value for the test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simulate another functional sample</span>
+s &lt;-<span class="st"> </span><span class="dv">0</span>
+<span class="cf">for</span> ( k <span class="cf">in</span> <span class="dv">4</span><span class="op">:</span>K ) {
+  s &lt;-<span class="st"> </span>s <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>( rho[k] ) <span class="op">*</span><span class="st"> </span>theta[k, ]
+}
+
+m2 &lt;-<span class="st"> </span>m1 <span class="op">+</span><span class="st"> </span>s
+Y &lt;-<span class="st"> </span><span class="kw">gmfd_simulate</span>( n, m2, <span class="dt">rho =</span> rho, <span class="dt">theta =</span> theta )
+FD2 &lt;-<span class="st"> </span><span class="kw">funData</span>( t, Y )
+
+test_output &lt;-<span class="st"> </span><span class="kw">gmfd_test</span>(FD1, FD2, <span class="dt">conf.level =</span> <span class="fl">0.95</span>, <span class="dt">stat_test =</span> <span class="st">&quot;mahalanobis&quot;</span>, <span class="dt">p =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">5</span>)
+test_output</code></pre></div>
+<pre><code>## $T0
+## [1] 85.17874
+## 
+## $quantile
+## [1] 13.75228
+## 
+## $pval
+## [1] 0</code></pre>
+</div>
+<div id="clustering-the-k-means-algorithm" class="section level1">
+<h1>Clustering: the k-means algorithm</h1>
+<p>The functional <span class="math inline">\(k\)</span>-means clustering algorithm is an iterative procedure, alternating a step of cluster assignment, where all the curves are assigned to a cluster, and a step of centroid calculation, where a relevant functional representative (the centroid) for each cluster is identified. More precisely, the algorithm is initialized by fixing the number <span class="math inline">\(k\)</span> of clusters and by randomly selecting a set of <span class="math inline">\(k\)</span> initial centroids <span class="math inline">\(\{\boldsymbol{\chi}_1^{(0)}(t), \ldots , \boldsymbol{\chi}_k^{(0)}(t)\}\)</span> among the curves of the dataset. Given this initial choice, the algorithm iteratively repeats the two basic steps mentioned above. Formally, at the <span class="math inline">\(m^{th}\)</span> iteration of the algorithm, <span class="math inline">\(m\geq 1\)</span>, the two following steps are performed:</p>
+<ul>
+<li><strong>Step 1 (cluster assignment step)</strong>: each curve is assigned to the cluster with the nearest centroid at the <span class="math inline">\((m-1)^{th}\)</span> iteration, according to the distance <span class="math inline">\(\hat{d}_p\)</span>. Formally, the <span class="math inline">\(m^{th}\)</span> cluster assignment <span class="math inline">\(C_i^{(m)}\)</span> of the <span class="math inline">\(i^{th}\)</span> statistical unit, for <span class="math inline">\(i=1,\ldots,n\)</span>, can be written as follows:
+<span class="math display">\[\begin{equation}    C_i^{(m)} := \underset{l=1,\ldots,k}{\operatorname{argmin}}\:\hat{d}_p(\textbf{X}_i(t), \boldsymbol{\chi}_l^{(m-1)}(t));
+\end{equation}\]</span></li>
+<li><strong>Step 2 (centroid calculation step)</strong>: the computation of the centroids at the <span class="math inline">\(m^{th}\)</span> iteration is performed by solving the optimization problems: for any <span class="math inline">\(l=1,\ldots,k\)</span>,
+<span class="math display">\[\begin{equation}    \boldsymbol{\chi}_l^{(m)}(t) := \underset{\boldsymbol{\chi} \in (L^2(I))^J}{\operatorname{argmin}}  \sum_{i:C_i^{(m)} = l} \hat{d}_p(\textbf{X}_i(t),\boldsymbol{\chi}(t))^2,
+\end{equation}\]</span>
+where <span class="math inline">\(C_i^{(m)}\)</span> is the cluster assignment of the <span class="math inline">\(i^{th}\)</span> statistical unit at the <span class="math inline">\(m^{th}\)</span> iteration. The algorithm stops when the same cluster assignments are obtained at two subsequent iterations, i.e. the set of cluster assignments <span class="math inline">\(\{C_1^{(\bar{m})},\ldots,C_n^{(\bar{m})}\}\)</span> and the set of centroids <span class="math inline">\(\{\boldsymbol{\chi}_1^{(\bar{m})}(t),\ldots, \boldsymbol{\chi}_k^{(\bar{m})}(t)\}\)</span> are considered final solutions of the algorithm if <span class="math inline">\(\bar{m}\)</span> is the minimum integer such that <span class="math inline">\(C_i^{(\bar{m}+1)} \equiv C_i^{(\bar{m})}\)</span> for all <span class="math inline">\(i=1,\ldots,n\)</span>.</li>
+</ul>
+<p>We apply the procedure by merging the two samples <span class="math inline">\(\mathbf{X}_1(t), ...,\mathbf{X}_{n_1}(t)\)</span> and <span class="math inline">\(\mathbf{Y}_{n_2}(t), ...,\mathbf{Y}_{n_2}(t)\)</span> previously simulated using the function <code>gmfd_kmeans( FD, n.cl , metric, p )</code> where <code>n.cl</code> is the number of cluster. It returns a vector of the clusters and a vector or a list of vectors of the centers, other than a plot of the clusters along with their empirical means.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We estimate the eigenvalues and eigenfunctions of the covariance matrix of all merged data</span>
+lambda &lt;-<span class="st"> </span><span class="kw">eigen</span>( <span class="kw">cov</span>( <span class="kw">rbind</span>( FD1<span class="op">$</span>data[[<span class="dv">1</span>]], FD2<span class="op">$</span>data[[<span class="dv">1</span>]] ) ) )<span class="op">$</span>values
+phi &lt;-<span class="st"> </span><span class="kw">eigen</span>( <span class="kw">cov</span> ( <span class="kw">rbind</span>( FD1<span class="op">$</span>data[[<span class="dv">1</span>]], FD2<span class="op">$</span>data[[<span class="dv">1</span>]] ) ) )<span class="op">$</span>vectors
+
+<span class="co"># Functional data sample containing the merged samples</span>
+FD &lt;-<span class="st"> </span><span class="kw">funData</span>( t, <span class="kw">rbind</span>( X, Y ) )
+
+kmeans_output &lt;-<span class="st"> </span><span class="kw">gmfd_kmeans</span>( FD, <span class="dt">n.cl =</span> <span class="dv">2</span>, <span class="dt">metric =</span> <span class="st">&quot;mahalanobis&quot;</span>, <span class="dt">p =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">5</span> )</code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
