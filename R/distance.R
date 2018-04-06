@@ -75,7 +75,7 @@ funDist <- function ( FD1, FD2, metric, p = NULL, lambda = NULL, phi = NULL, k_t
       integr <- ( x[[r]] - y[[r]] )^2
       Dist <- Dist + integral( grid, integr )
     }
-    sqrt(Dist)
+    Dist <- sqrt(Dist)
   }
   # Truncated Mahalanobis semi-distance
   else if ( metric == "trunc") {

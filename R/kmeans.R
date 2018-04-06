@@ -102,14 +102,14 @@ gmfd_kmeans <- function( FD, n.cl = 2, metric, p = NULL, k_trunc = NULL ) {
     if (metric == "L2") {
       for (i in 1:n) {
         for (k in 1:n.cl){
-          Dist[i, k] <- ( funDist( funData(grid, lapply( data, '[', i, TRUE )), funData(grid, lapply( data, '[', k, TRUE )), metric = "L2" ) )
+          Dist[i, k] <- ( funDist( funData(grid, lapply( data, '[', i, TRUE )), funData(grid, lapply( C, '[', k, TRUE )), metric = "L2" ) )
         }
       }
     }
     else if ( metric == "trunc" ) {
       for ( i in 1:n ) {
         for ( k in 1:n.cl ) {
-          Dist[i, k] <- ( funDist( funData(grid, lapply( data, '[', i, TRUE )), funData(grid, lapply( data, '[', k, TRUE )), metric = "trunc", lambda = lambda_hat, phi = phi_hat, k_trunc = k_trunc ) )
+          Dist[i, k] <- ( funDist( funData(grid, lapply( data, '[', i, TRUE )), funData(grid, lapply( C, '[', k, TRUE )), metric = "trunc", lambda = lambda_hat, phi = phi_hat, k_trunc = k_trunc ) )
         }
       }
     }
@@ -117,7 +117,7 @@ gmfd_kmeans <- function( FD, n.cl = 2, metric, p = NULL, k_trunc = NULL ) {
     else if ( metric == "mahalanobis" ) {
       for ( i in 1:n ) {
         for ( k in 1:n.cl ) {
-          Dist[i, k] <- ( funDist( funData(grid, lapply( data, '[', i, TRUE )), funData(grid, lapply( data, '[', k, TRUE )), metric = "mahalanobis", lambda = lambda_hat, phi = phi_hat, p = p) )
+          Dist[i, k] <- ( funDist( funData(grid, lapply( data, '[', i, TRUE )), funData(grid, lapply( C, '[', k, TRUE )), metric = "mahalanobis", lambda = lambda_hat, phi = phi_hat, p = p) )
         }
       }
     }

@@ -1,15 +1,15 @@
-796eac875eec9f4d90adb7eb5150707e *DESCRIPTION
+2ae97a4d6dabc47463bada37ce698ffa *DESCRIPTION
 93e816a70570eea016b7022d0bfacb81 *NAMESPACE
-c434ed513a60c9b3d5637aa705a53819 *R/distance.R
+475ec39d5f731d2497f82e19a09ae43c *R/distance.R
 23a969e7d41c228666d072f15fa7d236 *R/funData.R
-cf456b239307b14cea4a2055ea111fdd *R/kmeans.R
+2cfa4525bfa3d99b6c734e7aa30f2fac *R/kmeans.R
 20c9bf47fd03819bb472403eaa263a06 *R/simulation.R
 4c9181891a8c93201cf624a26fb20d5c *R/test.R
 4ea248d311bd027315664cd02e6c57c1 *R/utils.R
-7231be3a43d3d98827b4457e5051b84a *build/vignette.rds
+d46720faf81a88d0b0f54043baa289f6 *build/vignette.rds
 677ab10c8d703d24808445ddc42cfc9c *inst/doc/kmeans_vignette.R
-22292339af209469d032eceea78c7263 *inst/doc/kmeans_vignette.Rmd
-7d79c1eba98bc847b787bc4f68fc917a *inst/doc/kmeans_vignette.html
+4013d096454a6d19168979f42c6b7c53 *inst/doc/kmeans_vignette.Rmd
+0b548825d2f188514046304b04f03256 *inst/doc/kmeans_vignette.html
 c5c03f75f956f23f9f147b2919cd8f51 *man/funData.Rd
 a7d9293a4f36caf7c66dc7fdf46d17ba *man/funDist.Rd
 5e73f3f0ba7e0d56f67d31253bbdf304 *man/gmfd_diss.Rd
@@ -17,4 +17,4 @@ a7d9293a4f36caf7c66dc7fdf46d17ba *man/funDist.Rd
 d2b46c93d32d11b566c7257a4d5dfb07 *man/gmfd_simulate.Rd
 fb9346123590264e257b8fe3764feb41 *man/gmfd_test.Rd
 4ee6c7436e2d06345df96f75efde25d8 *man/plot.funData.Rd
-22292339af209469d032eceea78c7263 *vignettes/kmeans_vignette.Rmd
+4013d096454a6d19168979f42c6b7c53 *vignettes/kmeans_vignette.Rmd
